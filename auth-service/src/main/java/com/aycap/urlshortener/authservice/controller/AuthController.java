@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aycap.urlshortener.authservice.common.response.ApiResponse;
 import com.aycap.urlshortener.authservice.model.dto.RegisterResponse;
+import com.aycap.urlshortener.authservice.service.AuthService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -16,16 +17,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController 
 @RequestMapping("/api")
 public class AuthController {
-    // TODO: will add auth service later after testing controller
-    // private final AuthService authService;
+    private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<RegisterResponse>> register(@RequestBody String entity) {
-        //TODO: process POST request
-        
-        RegisterResponse mock = new RegisterResponse("usr_0001", "apichon", "apichon@example.com");
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(mock));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(authService.register(entity)));
     }
     
     
