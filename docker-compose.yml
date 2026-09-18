@@ -1,21 +1,47 @@
+name: urlshortener
+
 services:
   postgres:
     image: postgres:17-alpine
     container_name: shortener-postgres
     environment:
-      POSTGRES_DB: authdb
-      POSTGRES_USER: authuser
-      POSTGRES_PASSWORD: authpass
+      POSTGRES_DB: ${POSTGRES_DB:-authdb}
+      POSTGRES_USER: ${POSTGRES_USER:-authuser}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
     ports:
       - "5432:5432"
-    # volumes:
-      # - postgres-data:/var/lib/postgresql/data
-      # - ./docker/postgres-init:/docker-entrypoint-initdb.d:ro
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U authuser -d authdb"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-authuser} -d ${POSTGRES_DB:-authdb}"]
       interval: 5s
       timeout: 5s
       retries: 10
 
-  #  auth-service:
-  #  url-service:
+  auth-service:
+    build:
+      context: .
+      dockerfile: auth-service/Dockerfile
+    container_name: shortener-auth
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-authdb}
+      DB_USER: ${POSTGRES_USER:-authuser}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/actuator/health | grep -q UP"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+
+  # url-service:
+  # redirect-service:
+
+volumes:
+  postgres-data:

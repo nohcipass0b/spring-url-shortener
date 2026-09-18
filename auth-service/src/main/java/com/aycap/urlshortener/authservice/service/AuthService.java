@@ -40,7 +40,7 @@ public class AuthService {
 		}
 
 		return RegisterResponse
-				.from(userRepository.save(new User(request.email(), passwordEncoder.encode(request.password()))));
+			.from(userRepository.save(new User(request.email(), passwordEncoder.encode(request.password()))));
 	}
 
 	@Transactional
