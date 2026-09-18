@@ -17,9 +17,7 @@ public class ApiExceptionHandler {
 
 	@ExceptionHandler(BusinessException.class)
 	public ResponseEntity<ApiResponse<Void>> onBusiness(BusinessException ex) {
-		return ResponseEntity
-				.status(ex.code().httpStatus())
-				.body(ApiResponse.error(ex.code()));
+		return ResponseEntity.status(ex.code().httpStatus()).body(ApiResponse.error(ex.code()));
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -28,8 +26,8 @@ public class ApiExceptionHandler {
 		for (FieldError error : ex.getBindingResult().getFieldErrors()) {
 			fields.putIfAbsent(error.getField(), error.getDefaultMessage());
 		}
-		return ResponseEntity
-				.status(StatusCode.ERR_VALIDATION.httpStatus())
-				.body(ApiResponse.error(StatusCode.ERR_VALIDATION, fields));
+		return ResponseEntity.status(StatusCode.ERR_VALIDATION.httpStatus())
+			.body(ApiResponse.error(StatusCode.ERR_VALIDATION, fields));
 	}
+
 }

@@ -1,6 +1,6 @@
 package com.aycap.urlshortener.authservice.common.response;
 
-// Api response class global handle microservice response  
+// Api response class global handle microservice response
 public record ApiResponse<T>(ApiStatus status, T data) {
 
 	public static <T> ApiResponse<T> success(T data) {

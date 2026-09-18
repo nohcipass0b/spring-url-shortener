@@ -7,4 +7,5 @@ public class EmailAlreadyUsedException extends BusinessException {
 	public EmailAlreadyUsedException(String email) {
 		super(StatusCode.ERR_EMAIL_TAKEN, "Email already registered: " + email);
 	}
+
 }

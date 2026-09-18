@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.aycap.urlshortener.authservice.model.entity.User;
 
-public interface UserRepository extends JpaRepository<User,UUID>{
-    
-    boolean existsByEmail(String email);
+public interface UserRepository extends JpaRepository<User, UUID> {
+
+	boolean existsByEmail(String email);
+
 }

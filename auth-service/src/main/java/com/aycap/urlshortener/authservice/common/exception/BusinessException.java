@@ -14,4 +14,5 @@ public class BusinessException extends RuntimeException {
 	public StatusCode code() {
 		return code;
 	}
+
 }

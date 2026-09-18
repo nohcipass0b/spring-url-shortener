@@ -9,7 +9,6 @@ import jakarta.persistence.Table;
 import java.time.Instant;
 import java.util.UUID;
 
-
 @Entity
 @Table(name = "users")
 public class User {
@@ -51,4 +50,5 @@ public class User {
 	public Instant getCreatedAt() {
 		return createdAt;
 	}
+
 }
