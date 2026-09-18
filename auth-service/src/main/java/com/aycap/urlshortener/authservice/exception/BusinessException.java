@@ -1,4 +1,4 @@
-package com.aycap.urlshortener.authservice.common.exception;
+package com.aycap.urlshortener.authservice.exception;
 
 import com.aycap.urlshortener.authservice.common.response.StatusCode;
 

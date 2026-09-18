@@ -1,4 +1,4 @@
-package com.aycap.urlshortener.authservice.common.exception;
+package com.aycap.urlshortener.authservice.exception;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
