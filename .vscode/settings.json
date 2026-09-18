@@ -1,0 +1,24 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.format.settings.url": "config/spring-formatter.xml",
+    "java.format.settings.profile": "Spring Java Conventions",
+    "java.saveActions.organizeImports": true,
+    "java.completion.importOrder": [
+        "java",
+        "javax",
+        "org",
+        "com",
+        ""
+    ],
+    "[java]": {
+        "editor.formatOnSave": true,
+        "editor.insertSpaces": false,
+        "editor.tabSize": 4,
+        "editor.detectIndentation": false,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true
+}

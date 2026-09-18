@@ -1,0 +1,23 @@
+# secrets / local overrides
+.env
+.env.*
+!.env.example
+**/application-local.properties
+**/application-secret.properties
+
+# gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# ide
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+bin/
+
+# os
+.DS_Store
+Thumbs.db
