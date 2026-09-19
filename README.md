@@ -191,6 +191,23 @@ Every response — success or failure — uses the same shape, so clients parse 
 }
 ```
 
+### Postman collection
+
+`spring-url-shortener.postman_collection.json` covers every endpoint above. Import it
+in Postman with **File > Import**, then run `Register` and `Login` first — the bearer
+token from the login response is what the url-service requests expect.
+
+The token variables are exported empty on purpose. Paste your own token from the
+login response into the collection variable, or set it in a Postman environment:
+
+| Request | Auth |
+|---|---|
+| `auth-service / Register`, `Login` | none |
+| `url-service / Shorten`, `Urls`, `Deactive url`, `Active url` | Bearer token from `Login` |
+
+The saved example responses use placeholder emails and truncated tokens, so nothing
+in the file is a working credential.
+
 ---
 
 ## Logs
