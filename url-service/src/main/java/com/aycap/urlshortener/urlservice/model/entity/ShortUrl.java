@@ -1,4 +1,4 @@
-package com.aycap.urlservice.model.entity;
+package com.aycap.urlshortener.urlservice.model.entity;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -25,6 +25,7 @@ public class ShortUrl {
 	@Column(name = "original_url", nullable = false, updatable = false, length = 2048)
 	private String originalUrl;
 
+	/** Owner, taken from the JWT subject. No FK - users live in another service. */
 	@Column(name = "user_id", nullable = false, updatable = false)
 	private UUID userId;
 
@@ -95,4 +96,5 @@ public class ShortUrl {
 	public Instant getDeactivatedAt() {
 		return deactivatedAt;
 	}
+
 }
