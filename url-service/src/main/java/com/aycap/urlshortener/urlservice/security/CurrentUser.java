@@ -13,4 +13,5 @@ public final class CurrentUser {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return (UUID) principal;
 	}
+
 }
