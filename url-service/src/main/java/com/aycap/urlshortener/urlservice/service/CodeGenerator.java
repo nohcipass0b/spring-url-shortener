@@ -10,7 +10,7 @@ public class CodeGenerator {
 
 	// base 62 ramdon
 	private static final char[] ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-			.toCharArray();
+		.toCharArray();
 
 	private final SecureRandom random = new SecureRandom();
 
