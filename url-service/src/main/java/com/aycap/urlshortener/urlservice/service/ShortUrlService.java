@@ -61,6 +61,12 @@ public class ShortUrlService {
 		url.deactivate();
 	}
 
+	@Transactional
+	public void activate(UUID id, UUID userId) {
+		ShortUrl url = repository.findByIdAndUserId(id, userId).orElseThrow(ShortUrlNotFoundException::new);
+		url.activate();
+	}
+
 	public String shortUrlFor(ShortUrl url) {
 		return baseUrl + "/r/" + url.getCode();
 	}

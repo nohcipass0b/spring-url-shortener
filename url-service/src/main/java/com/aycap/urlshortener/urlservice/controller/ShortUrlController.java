@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +20,6 @@ import com.aycap.urlshortener.urlservice.model.dto.ShortenRequest;
 import com.aycap.urlshortener.urlservice.model.dto.ShortenResponse;
 import com.aycap.urlshortener.urlservice.model.entity.ShortUrl;
 import com.aycap.urlshortener.urlservice.security.CurrentUser;
-// import com.aycap.urlshortener.urlservice.security.CurrentUser;
 import com.aycap.urlshortener.urlservice.service.ShortUrlService;
 
 import jakarta.validation.Valid;
@@ -38,19 +38,28 @@ public class ShortUrlController {
 	public ResponseEntity<ApiResponse<ShortenResponse>> shorten(@Valid @RequestBody ShortenRequest request) {
 		ShortUrl created = service.shorten(request.originalUrl(), CurrentUser.id());
 		return ResponseEntity.status(HttpStatus.CREATED)
-				.body(ApiResponse.success(new ShortenResponse(service.shortUrlFor(created))));
+			.body(ApiResponse.success(new ShortenResponse(service.shortUrlFor(created))));
 	}
 
 	@GetMapping("/urls")
 	public ResponseEntity<ApiResponse<List<ShortUrlResponse>>> list() {
-		List<ShortUrlResponse> urls = service.listOwnedBy(CurrentUser.id()).stream()
-				.map(url -> ShortUrlResponse.from(url, service.shortUrlFor(url))).toList();
+		List<ShortUrlResponse> urls = service.listOwnedBy(CurrentUser.id())
+			.stream()
+			.map(url -> ShortUrlResponse.from(url, service.shortUrlFor(url)))
+			.toList();
 		return ResponseEntity.ok(ApiResponse.success(urls));
 	}
 
 	@DeleteMapping("/urls/{id}")
-	public ResponseEntity<Void> deactivate(@PathVariable UUID id) {
+	public ResponseEntity<ApiResponse<Void>> deactivate(@PathVariable UUID id) {
 		service.deactivate(id, CurrentUser.id());
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.ok(ApiResponse.success());
 	}
+
+	@PutMapping("/urls/{id}/activate")
+	public ResponseEntity<ApiResponse<Void>> activate(@PathVariable UUID id) {
+		service.activate(id, CurrentUser.id());
+		return ResponseEntity.ok(ApiResponse.success());
+	}
+
 }

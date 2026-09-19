@@ -57,6 +57,13 @@ public class ShortUrl {
 		}
 	}
 
+	public void activate() {
+		if (!active) {
+			this.active = true;
+			this.deactivatedAt = null;
+		}
+	}
+
 	public void recordClick() {
 		this.clickCount++;
 	}
