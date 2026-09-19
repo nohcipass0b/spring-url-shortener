@@ -11,13 +11,34 @@ Built as a **monorepo** so the whole stack shares one build and comes up with a 
 
 ## Services
 
-| Service | Port | Status | Description |
-|---|---|---|---|
-| `auth-service` | 8080 | ✅ Running | Registration, login, JWT issuance |
-| `url-service` | 8081 | 🚧 Planned | Shorten and resolve URLs |
-| `postgres` | 5432 | ✅ Running | Database (Docker) |
+| Service | Port | Description |
+|---|---|---|
+| `auth-service` | 8080 | Registration, login, JWT issuance |
+| `url-service` | 8081 | Shorten, list, deactivate, redirect |
+| `postgres` | 5432 | Two databases: `authdb` and `urldb` |
 
 ---
+
+## Architecture ideal
+
+
+```
+  client
+    |  POST /api/shorten   Authorization: Bearer <token>
+    v
+  +------+   1. is this token valid?    +--------------------+
+  | API  | ------------------------->   | auth-service :8080 | --> authdb
+  | GATE |                              |                    |
+  | WAY  | <-------------------------   |  owns JWT_SECRET   |
+  +------+   2. yes, user id = ...      +--------------------+
+    |
+    |  3. forward upstream, user id in a header
+    v
+  +--------------------+
+  | url-service :8081  | --> urldb
+  |  trusts the header |
+  +--------------------+
+```
 
 ## Getting started
 
@@ -26,25 +47,22 @@ cp .env.example .env        # then set JWT_SECRET
 docker compose up -d --build
 ```
 
-Both containers report `healthy` in about 30 seconds:
+All three containers report `healthy` in under a minute:
 
 ```bash
 docker compose ps
 ```
 
-The API is then on `http://localhost:8080`.
+auth-service is then on `http://localhost:8080`, url-service on `http://localhost:8081`.
 
-### Running locally instead
-
-Postgres still comes from Docker; the service runs on the host.
+### Running locally instead if(docker compose up -d --build) skip this part kub
 
 ```bash
 docker compose up -d postgres
 export JWT_SECRET=<your-secret>          # PowerShell: $env:JWT_SECRET = "..."
 ./gradlew :auth-service:bootRun
+./gradlew :url-service:bootRun
 ```
-
-`JWT_SECRET` has no default on purpose — see [Design decisions](#design-decisions).
 
 ---
 
@@ -89,6 +107,68 @@ curl -X POST http://localhost:8080/api/login \
 }
 ```
 
+### Shorten a URL
+
+`token` from the login response goes in the `Authorization` header for every url-service
+call except the redirect.
+
+```bash
+curl -X POST http://localhost:8081/api/shorten \
+  -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d '{"original_url":"https://example.com/a/very/long/path"}'
+```
+
+```json
+{
+  "status": { "code": "SUCCESS", "description": { "en": "Success" } },
+  "data": { "short_url": "http://localhost:8081/r/WLApoNN" }
+}
+```
+
+### List your links
+
+```bash
+curl http://localhost:8081/api/urls -H "Authorization: Bearer $TOKEN"
+```
+
+```json
+{
+  "status": { "code": "SUCCESS", "description": { "en": "Success" } },
+  "data": [
+    {
+      "id": "9df907ca-9226-47cf-b4d7-80d678940a81",
+      "code": "WLApoNN",
+      "short_url": "http://localhost:8081/r/WLApoNN",
+      "original_url": "https://example.com/a/very/long/path",
+      "active": true,
+      "click_count": 0,
+      "created_at": "2026-09-19T03:35:46.925Z"
+    }
+  ]
+}
+```
+
+### Deactivate and re-activate
+
+```bash
+curl -X DELETE http://localhost:8081/api/urls/$ID -H "Authorization: Bearer $TOKEN"
+curl -X PUT http://localhost:8081/api/urls/$ID/activate -H "Authorization: Bearer $TOKEN"
+```
+
+A deactivated link answers 404 on redirect. Re-activating brings it back with its click
+count intact.
+
+### Redirect
+
+Public, no token. This is what the short URL points at.
+
+```bash
+curl -i http://localhost:8081/r/WLApoNN
+# HTTP/1.1 302
+# Location: https://example.com/a/very/long/path
+```
+
 ### Response envelope
 
 Every response — success or failure — uses the same shape, so clients parse one format:
@@ -97,8 +177,9 @@ Every response — success or failure — uses the same shape, so clients parse 
 |---|---|---|
 | `SUCCESS` | 200 / 201 | Request succeeded |
 | `ERR_VALIDATION` | 400 | Field validation failed; `data` lists the fields |
-| `ERR_UNAUTHORIZED` | 401 | Bad credentials |
-| `ERR_EMAIL_TAKEN` | 409 | Email already registered |
+| `ERR_UNAUTHORIZED` | 401 | Bad credentials, or a missing or invalid token |
+| `ERR_NOT_FOUND` | 404 | No such link, or it is not yours |
+| `ERR_EMAIL_TAKEN` | 409 | Email already registered (auth-service only) |
 
 ```json
 {
@@ -112,40 +193,56 @@ Every response — success or failure — uses the same shape, so clients parse 
 
 ---
 
-## Design decisions
+## Testing
 
-**Refresh tokens are stored hashed.** Only the SHA-256 of a refresh token reaches the
-database. A database dump therefore cannot be replayed as a valid session.
+```bash
+./gradlew test                    # both services
+./gradlew :auth-service:test      # one service
+./gradlew :url-service:test --tests "*CodeGeneratorTest*"     # one class
+```
 
-**Login failures are indistinguishable.** A wrong password and an unregistered email
-return byte-identical responses, so the endpoint cannot be used to enumerate which
-addresses have accounts.
+`./gradlew build` runs the formatting check, the tests and the coverage gate together.
 
-**Flyway owns the schema; Hibernate only checks it.** `ddl-auto=validate` means the app
-refuses to start if an entity and its table have drifted apart, rather than silently
-altering production data.
+Gradle skips a test task whose inputs have not changed and reports `UP-TO-DATE`. Add
+`--rerun-tasks` to force it, or `-i` to see each test name as it runs.
 
-**`JWT_SECRET` has no fallback value.** A default would let a deployment that forgot to
-set it boot successfully with a secret that is public in this repository. Failing at
-startup is the safer outcome.
+### Reading the results
 
-**Passwords use BCrypt.** The `password_hash` column is `varchar(60)` — exactly a BCrypt
-digest — and the request DTO caps passwords at 72 bytes, past which BCrypt silently
-ignores input.
+The console prints `BUILD SUCCESSFUL`, or the names of the tests that failed. The full
+report, with stack traces, is written to:
 
----
+```
+auth-service/build/reports/tests/test/index.html
+url-service/build/reports/tests/test/index.html
+```
+
+
+```
+auth-service/build/reports/jacoco/test/html/index.html
+url-service/build/reports/jacoco/test/html/index.html
+```
+
 
 ## Project layout
 
 ```
 .
 ├── auth-service/
-│   ├── src/main/java/...      # controller · service · repository · entity
+│   ├── src/main/java/...          # controller · service · repository · entity
+│   ├── src/test/java/...
 │   ├── src/main/resources/db/migration/
 │   │   ├── V1__create_user_table.sql
 │   │   └── V2__create_sessions_table.sql
-│   └── Dockerfile             # multi-stage, layered, non-root
-├── settings.gradle            # includes each service
+│   └── Dockerfile                 # multi-stage, layered, non-root
+├── url-service/
+│   ├── src/main/java/...          # same layout, plus security/ for the JWT filter
+│   ├── src/test/java/...
+│   ├── src/main/resources/db/migration/
+│   │   └── V1__create_short_urls_table.sql
+│   └── Dockerfile
+├── docker/postgres-init/          # creates urldb alongside authdb
+├── config/spring-formatter.xml    # same rules the build enforces
+├── settings.gradle                # includes each service
 ├── docker-compose.yml
 └── .env.example
 ```
@@ -156,6 +253,4 @@ ignores input.
 
 - `POST /api/refresh` and `POST /api/logout` — the `sessions` table and
   `Session.revoke()` exist, but no endpoint calls them yet
-- `url-service` and `redirect-service`
-- Automated tests
-- Rate limiting on the auth endpoints
+- the logger part that log request response consume and provide for monitors to like elastic elk
