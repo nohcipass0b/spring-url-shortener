@@ -13,7 +13,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.aycap.urlshortener.urlservice.common.response.ApiResponse;
 import com.aycap.urlshortener.urlservice.common.response.StatusCode;
 import com.aycap.urlshortener.urlservice.security.JwtAuthenticationFilter;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 
 @Configuration
 public class SecurityConfig {
