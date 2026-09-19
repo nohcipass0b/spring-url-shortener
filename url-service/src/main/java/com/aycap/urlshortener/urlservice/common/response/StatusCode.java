@@ -26,4 +26,14 @@ public enum StatusCode {
 		return this.httpStatus;
 	}
 
+	// a status the framework produced on its own, mapped back onto our codes
+	public static StatusCode forHttpStatus(int value) {
+		for (StatusCode candidate : values()) {
+			if (candidate != SUCCESS && candidate.httpStatus.value() == value) {
+				return candidate;
+			}
+		}
+		return ERR_INTERNAL;
+	}
+
 }
