@@ -59,7 +59,6 @@ auth-service is then on `http://localhost:8080`, url-service on `http://localhos
 
 ```bash
 docker compose up -d postgres
-export JWT_SECRET=<your-secret>          # PowerShell: $env:JWT_SECRET = "..."
 ./gradlew :auth-service:bootRun
 ./gradlew :url-service:bootRun
 ```
