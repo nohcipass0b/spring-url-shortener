@@ -1,0 +1,4 @@
+rootProject.name = 'urlshortener'
+
+include 'auth-service'
+include 'url-service'

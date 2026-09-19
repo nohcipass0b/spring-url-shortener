@@ -1,0 +1,760 @@
+{
+  "info": {
+    "_postman_id": "03a19d6a-67e7-4a76-9682-418d7d1c42f7",
+    "name": "spring-url-shortener",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "39075617"
+  },
+  "item": [
+    {
+      "name": "auth-service",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"apichon.cha@hotmail.com\",\r\n    \"password\": \"myMostExtreamSecretPassword007\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "register"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "[200] Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"apichon.cha@hotmail.com\",\r\n    \"password\": \"myMostExtreamSecretPassword007\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/register",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "register"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "x-request-id",
+                  "value": "9b8bca4a"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "0"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "expires",
+                  "value": "0"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "date",
+                  "value": "Sat, 19 Sep 2026 08:50:46 GMT"
+                },
+                {
+                  "key": "keep-alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": {\n    \"code\": \"SUCCESS\",\n    \"description\": {\n      \"en\": \"Success\"\n    }\n  },\n  \"data\": {\n    \"id\": \"2a807eae-0ae1-4757-9015-944cfe83cdec\",\n    \"email\": \"apichon.cha@hotmail.com\",\n    \"createdAt\": \"2026-09-19T08:50:46.542051592Z\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"apichon.cha@hotmail.com\",\r\n    \"password\": \"myMostExtreamSecretPassword007\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "login"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "[200] Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"email\": \"apichon.cha@hotmail.com\",\r\n    \"password\": \"myMostExtreamSecretPassword007\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/api/login",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "api",
+                    "login"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "x-request-id",
+                  "value": "294ac52b"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "0"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "expires",
+                  "value": "0"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "date",
+                  "value": "Sat, 19 Sep 2026 08:50:50 GMT"
+                },
+                {
+                  "key": "keep-alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": {\n    \"code\": \"SUCCESS\",\n    \"description\": {\n      \"en\": \"Success\"\n    }\n  },\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyYTgwN2VhZS0wYWUxLTQ3NTctOTAxNS05NDRjZmU4M2NkZWMiLCJlbWFpbCI6ImFwaWNob24uY2hhQGhvdG1haWwuY29tIiwiaWF0IjoxNzg5ODA3ODUwLCJleHAiOjE3ODk4MDg3NTB9.OpHYDxOrWInlLBsDYV-7ItIDBM86Gm7QLR0Y_sn23LGBJEc4wvvj2lzbIForauyx3D-tOigN3ckRF8FnY2ccZw\",\n    \"refreshToken\": \"d73C0fZHG5T6C2LvVl5BPje4qmJykBxdCxvouv2VRi4\",\n    \"tokenType\": \"Bearer\",\n    \"expiresInSeconds\": 900\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "url-service",
+      "item": [
+        {
+          "name": "Shorten",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0a9m}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"original_url\": \"https://example.com/some/very/long/link\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "localhost:8081/api/shorten",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "shorten"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "[200] Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"original_url\": \"https://example.com/some/very/long/link\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "localhost:8081/api/shorten",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "api",
+                    "shorten"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "x-request-id",
+                  "value": "00deedde"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "0"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "expires",
+                  "value": "0"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "date",
+                  "value": "Sat, 19 Sep 2026 08:51:26 GMT"
+                },
+                {
+                  "key": "keep-alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": {\n    \"code\": \"SUCCESS\",\n    \"description\": {\n      \"en\": \"Success\"\n    }\n  },\n  \"data\": {\n    \"short_url\": \"http://localhost:8081/r/hkuhMBl\"\n  }\n}"
+            }
+          ]
+        },
+        {
+          "name": "Urls",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0a9m}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "localhost:8081/api/urls",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "urls"
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "[ 200 ] Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "localhost:8081/api/urls",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "api",
+                    "urls"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "0"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "expires",
+                  "value": "0"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "date",
+                  "value": "Sat, 19 Sep 2026 03:46:29 GMT"
+                },
+                {
+                  "key": "keep-alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": {\n    \"code\": \"SUCCESS\",\n    \"description\": {\n      \"en\": \"Success\"\n    }\n  },\n  \"data\": [\n    {\n      \"id\": \"ff6a50ea-7a4f-4724-a2d2-63df7c0ccfa2\",\n      \"code\": \"yxbom8g\",\n      \"short_url\": \"http://localhost:8081/r/yxbom8g\",\n      \"original_url\": \"https://example.com/some/very/long/link\",\n      \"active\": true,\n      \"click_count\": 0,\n      \"created_at\": \"2026-09-19T03:04:52.912883Z\"\n    },\n    {\n      \"id\": \"368bf15b-9fac-436b-bad3-de6fd258f70b\",\n      \"code\": \"eKh2l5V\",\n      \"short_url\": \"http://localhost:8081/r/eKh2l5V\",\n      \"original_url\": \"https://example.com/some/very/long/link\",\n      \"active\": true,\n      \"click_count\": 2,\n      \"created_at\": \"2026-09-19T02:44:00.446426Z\"\n    },\n    {\n      \"id\": \"604b47c8-8980-4e3c-b2a9-bd319d72dcc4\",\n      \"code\": \"vZOpULJ\",\n      \"short_url\": \"http://localhost:8081/r/vZOpULJ\",\n      \"original_url\": \"https://example.com/some/very/long/link\",\n      \"active\": true,\n      \"click_count\": 0,\n      \"created_at\": \"2026-09-19T02:39:13.037917Z\"\n    }\n  ]\n}"
+            }
+          ]
+        },
+        {
+          "name": "Deactive url",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0a9m}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "localhost:8081/api/urls/:id",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "urls",
+                ":id"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "58f60f8d-e998-458b-b37e-8a8ee83603f4"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "[200] Success",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "localhost:8081/api/urls/:id",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "api",
+                    "urls",
+                    ":id"
+                  ],
+                  "query": [
+                    {
+                      "key": "",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "58f60f8d-e998-458b-b37e-8a8ee83603f4"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "x-request-id",
+                  "value": "c23aa89c"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "0"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "expires",
+                  "value": "0"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "date",
+                  "value": "Sat, 19 Sep 2026 08:52:15 GMT"
+                },
+                {
+                  "key": "keep-alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": {\n    \"code\": \"SUCCESS\",\n    \"description\": {\n      \"en\": \"Success\"\n    }\n  },\n  \"data\": null\n}"
+            }
+          ]
+        },
+        {
+          "name": "Active url",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{json_web_token_0a9m}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "localhost:8081/api/urls/:id/activate",
+              "host": [
+                "localhost"
+              ],
+              "port": "8081",
+              "path": [
+                "api",
+                "urls",
+                ":id",
+                "activate"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": "",
+                  "disabled": true
+                }
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "58f60f8d-e998-458b-b37e-8a8ee83603f4"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "[200] Success",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                  "raw": "localhost:8081/api/urls/:id/activate",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "api",
+                    "urls",
+                    ":id",
+                    "activate"
+                  ],
+                  "query": [
+                    {
+                      "key": "",
+                      "value": "",
+                      "disabled": true
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "58f60f8d-e998-458b-b37e-8a8ee83603f4"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "x-request-id",
+                  "value": "dbd2e1e8"
+                },
+                {
+                  "key": "x-content-type-options",
+                  "value": "nosniff"
+                },
+                {
+                  "key": "x-xss-protection",
+                  "value": "0"
+                },
+                {
+                  "key": "cache-control",
+                  "value": "no-cache, no-store, max-age=0, must-revalidate"
+                },
+                {
+                  "key": "pragma",
+                  "value": "no-cache"
+                },
+                {
+                  "key": "expires",
+                  "value": "0"
+                },
+                {
+                  "key": "x-frame-options",
+                  "value": "DENY"
+                },
+                {
+                  "key": "content-type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "transfer-encoding",
+                  "value": "chunked"
+                },
+                {
+                  "key": "date",
+                  "value": "Sat, 19 Sep 2026 08:52:49 GMT"
+                },
+                {
+                  "key": "keep-alive",
+                  "value": "timeout=60"
+                },
+                {
+                  "key": "connection",
+                  "value": "keep-alive"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"status\": {\n    \"code\": \"SUCCESS\",\n    \"description\": {\n      \"en\": \"Success\"\n    }\n  },\n  \"data\": null\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "json_web_token_12vg",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0tbo",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0rcp",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_1dj9",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_1aex",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_09wv",
+      "secret": true
+    },
+    {
+      "key": "json_web_token_0a9m",
+      "secret": true
+    }
+  ]
+}
