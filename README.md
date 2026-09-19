@@ -193,6 +193,37 @@ Every response — success or failure — uses the same shape, so clients parse 
 
 ---
 
+## Logs
+
+Every response have `X-Request-Id` in header. Send your own it keep yours, if not it
+generate one. So when something wrong just grep that id and you see all line of it.
+
+```bash
+docker compose logs -f auth-service
+```
+
+```
+WARN  [urlshortener-auth-service,a3f1c2d8] ApiExceptionHandler  : POST /api/register rejected: ERR_EMAIL_TAKEN
+INFO  [urlshortener-auth-service,a3f1c2d8] RequestLoggingFilter : POST /api/register -> 409 in 14ms
+```
+
+`WARN` = caller do wrong, no stack trace. `ERROR` = our bug, full stack trace. Read the
+last `Caused by`, that one is real cause.
+
+No request body in log, because /register and /login send password as plain text.
+
+### Plan
+
+Right now it only print to stdout and you must grep by yourself. Next step is ship it to
+Elasticsearch: the service keep writing to stdout, then a consumer like Filebeat or
+Fluent Bit read from docker and push to ELK, so nothing change in the code.
+
+Before that the log should be JSON instead of text (one line one event), otherwise the
+stack trace become many event and `requestId` is not a field you can filter. Then in
+Kibana you search by request id and see everything of that one call.
+
+---
+
 ## Testing
 
 ```bash
